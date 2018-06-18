@@ -11,15 +11,7 @@ Serial.println("The GPS Received Signal:");
 gpsSerial.begin(9600); // connect gps sensor 
 
 }
-/*static void smartdelay(unsigned long ms)
-{
-  unsigned long start = millis();
-  do 
-  {
-    while (ss.available())
-      gps.encode(ss.read());
-  } while (millis() - start < ms);
-}*/
+
 void getPosition(){ // get latitude and longitude 
    static unsigned long start = millis();
    if(millis() - start > GPS_DELAY_MS){
@@ -44,11 +36,6 @@ void getPosition(){ // get latitude and longitude
 
 
 void loop(){
-  static unsigned long start_test = millis();
-
-  
-    Serial.println("rodando main");
-  
   
   getPosition();
   
