@@ -1,14 +1,18 @@
 #include <SoftwareSerial.h> 
 #include <TinyGPS.h>
 #define GPS_DELAY_MS 1500
-float lat = 1.000,lon = 1.000000; // create variable for latitude and longitude object  
+#define BUTTON_PIN 7
+
+float lat = 1.000,lon = 1.000000; // create variable for latitude and longitude object
+bool activateAlarm = false;  
 SoftwareSerial gpsSerial(4,3);//rx,tx 
 TinyGPS gps; // create gps object 
 
 void setup(){ 
 Serial.begin(9600); // connect serial 
 Serial.println("The GPS Received Signal:"); 
-gpsSerial.begin(9600); // connect gps sensor 
+gpsSerial.begin(9600); // connect gps sensor
+pinMode(BUTTON_PIN,INPUT);
 
 }
 
@@ -29,18 +33,20 @@ void getPosition(){ // get latitude and longitude
             Serial.println(millis() - start);
             start = millis();
           }
-           
       }
     }      
 }
 
 
 void loop(){
-  
-  getPosition();
-  
-   
-  
+  if(digitalRead(BUTTON_PIN) == 1){
+    activateAlarm = true;
+  }
+  if(activateAlarm){
+   getPosition();
+  }
+  Serial.println(digitalRead(BUTTON_PIN));
+ 
 } 
 
  
