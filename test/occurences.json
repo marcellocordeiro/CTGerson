@@ -1,0 +1,21 @@
+{
+    "occurences": [
+        {
+            "busid": "001",
+            "date": "04/08/2018",
+            "alerttime": "16:47",
+            "responded": true,
+            "responsetime": "16:50",
+            "responderlogin": "msc3",
+            "finishtime": "17:05",
+            "successfull": true,
+            "notes": "Conseguimos chegar rapido ao local e devolvemos os pertences aos passageiros."
+        },
+        {
+            "busid": "002",
+            "date": "02/08/2018",
+            "alerttime": "08:32",
+            "responded": false
+        }
+    ]
+}

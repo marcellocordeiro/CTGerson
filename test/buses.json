@@ -1,0 +1,22 @@
+{
+    "buses": [
+        {
+            "busid": "001",
+            "plate": "PFV-9999",
+            "linenumber": "12",
+            "company": "Borborema" 
+        },
+        {
+            "busid": "002",
+            "plate": "PFV-9599",
+            "linenumber": "522",
+            "company": "Transcol" 
+        },
+        {
+            "busid": "004",
+            "plate": "PGC-7507",
+            "linenumber": "522",
+            "company": "Transcol" 
+        }
+    ]
+}

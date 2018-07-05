@@ -1,0 +1,16 @@
+{
+    "users": [
+        {
+            "admin": true,
+            "name": "Carol",
+            "login": "ccal2",
+            "password": "pizza"
+        },
+        {
+            "admin": false,
+            "name": "Marcello",
+            "login": "msc3",
+            "password": "more_pizza"
+        }
+    ]
+}
