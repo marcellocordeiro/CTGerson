@@ -1,0 +1,3 @@
+[submodule "src/knot-cloud-source"]
+	path = src/knot-cloud-source
+	url = https://github.com/CESARBR/knot-cloud-source
