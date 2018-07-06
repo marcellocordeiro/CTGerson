@@ -1,0 +1,15 @@
+<head>
+    <title>CTGerson</title>
+</head>
+
+<body>
+    <h1>CTGerson</h1>
+
+    <h2>Cadastrar ônibus</h2>
+
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+</body>

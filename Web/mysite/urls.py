@@ -18,6 +18,9 @@ from django.contrib import admin
 from CTGerson import views
 
 urlpatterns = [
-    url(r'^$', views.initial, name = 'initial'),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.login, name = 'login'),
+    url(r'^lista_onibus/$', views.bus_list, name = 'bus_list'),
+    url(r'^cadastrar_onibus/', views.register_bus, name = 'register_bus'),
+    #url(r'^onibus/$', views.bus, name = 'bus'),
 ]

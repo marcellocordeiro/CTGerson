@@ -1,0 +1,19 @@
+<head>
+    <title>CTGerson</title>
+</head>
+
+<body>
+    <h1>CTGerson</h1>
+    
+    {% if buses %}
+        <ul>
+            {% for bus in buses %}
+                <li>{{bus.plate}} - {{bus.company}}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum ônibus encontrado</p>
+    {% endif %}
+
+    <p><a href="/cadastrar_onibus">Adicionar</a></p>
+</body>
