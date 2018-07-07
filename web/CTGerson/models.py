@@ -12,4 +12,4 @@ class Bus(models.Model):
 
 
 #class Ocurrence(models.Model):
-#    busid = models.ForeignKey('CTGerson.Bus', on_delete=None)
+#    busid = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT)
