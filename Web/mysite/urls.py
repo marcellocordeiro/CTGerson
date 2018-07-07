@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from CTGerson import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.home, name = 'home'),
+    url(r'^lista_onibus/$', views.bus_list, name = 'bus_list'),
+    url(r'^editar_onibus/(?P<pk>[0-9]+)/$', views.edit_bus, name='edit_bus'),
+    url(r'^remover_onibus/(?P<pk>[0-9]+)/$', views.remove_bus, name = 'remove_bus'),
+    url(r'^cadastrar_onibus/$', views.register_bus, name = 'register_bus'),
 ]

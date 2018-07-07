@@ -1,0 +1,28 @@
+{% load staticfiles %}
+
+<html>
+    <head>
+        <title>CTGerson</title>
+
+        <!--Bootstrap-->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+        <!--Custom Fonts-->
+        <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+        <!--CSS (always at the end)-->
+        <link rel="stylesheet" href="{% static 'css/CTGerson.css' %}">
+    </head>
+
+    <body>
+        <div class="page-header">
+            <h1><a href="/">CTGerson</a></h1>
+        </div>
+        
+        <div class="content container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+</html>
