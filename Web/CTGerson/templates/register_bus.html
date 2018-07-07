@@ -1,15 +1,12 @@
-<head>
-    <title>CTGerson</title>
-</head>
+{% extends "base_logged.html" %}
 
-<body>
-    <h1>CTGerson</h1>
-
+{% block logged_content %}
     <h2>Cadastrar ônibus</h2>
+    <br />
 
     <form method="POST">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Save</button>
+        <br/>
+        <button type="submit">Cadastrar</button>
     </form>
-
-</body>
+{% endblock logged_content %}

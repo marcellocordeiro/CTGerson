@@ -1,19 +1,40 @@
-<head>
-    <title>CTGerson</title>
-</head>
+{% extends 'base_logged.html' %}
 
-<body>
-    <h1>CTGerson</h1>
+{% block logged_content %}
+    <div class="page-title">
+        <h2>Lista de ônibus cadastrados</h2>
+        <br />
+    </div>
+
+    <div class="page-content">
+        {% if buses %}
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Número da linha</th>
+                    <th>Empresa</th>
+                    <th>Placa</th>
+                    <th>Editar</th>
+                    <th>Remover</th>
+                </tr>
     
-    {% if buses %}
-        <ul>
-            {% for bus in buses %}
-                <li>{{bus.plate}} - {{bus.company}}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Nenhum ônibus encontrado</p>
-    {% endif %}
+                {% for bus in buses %}
+                    <tr>
+                        <td>{{bus.id}}</td>
+                        <td>{{bus.line_number}}</td>
+                        <td>{{bus.company}}</td>
+                        <td>{{bus.plate}}</td>
+                        <td><a class="table-button" href="{% url 'edit_bus' pk=bus.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a class="table-button remove-button" href="{% url 'remove_bus' pk=bus.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Nenhum ônibus encontrado</p>
+        {% endif %}
+    
+        <br />
+        <p><a class="button" href="/cadastrar_onibus">Adicionar</a></p>
+    </div>
 
-    <p><a href="/cadastrar_onibus">Adicionar</a></p>
-</body>
+{% endblock logged_content %}
