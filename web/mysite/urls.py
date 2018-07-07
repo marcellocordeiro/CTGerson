@@ -17,15 +17,11 @@ from django.contrib import admin
 from django.urls import path, re_path
 from CTGerson import views
 
-""" urlpatterns = [
-    path('admin/', admin.site.urls),
-] """
-
 urlpatterns = [
-    re_path(r'^admin/', admin.site.urls),
-    re_path(r'^$', views.home, name = 'home'),
-    re_path(r'^lista_onibus/$', views.bus_list, name = 'bus_list'),
-    re_path(r'^editar_onibus/(?P<pk>[0-9]+)/$', views.edit_bus, name='edit_bus'),
-    re_path(r'^remover_onibus/(?P<pk>[0-9]+)/$', views.remove_bus, name = 'remove_bus'),
-    re_path(r'^cadastrar_onibus/$', views.register_bus, name = 'register_bus'),
+    path('admin/', admin.site.urls),
+    path('', views.home, name='home'),
+    path('lista_onibus/', views.bus_list, name='bus_list'),
+    path('editar_onibus/(?P<pk>[0-9]+)/', views.edit_bus, name='edit_bus'),
+    path('remover_onibus/(?P<pk>[0-9]+)/', views.remove_bus, name = 'remove_bus'),
+    path('cadastrar_onibus/', views.register_bus, name = 'register_bus'),
 ]
