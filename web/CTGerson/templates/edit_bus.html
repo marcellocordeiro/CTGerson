@@ -1,0 +1,16 @@
+{% extends "base_logged.html" %}
+
+{% block logged_content %}
+    <div class="page-title">
+        <h2>Editar ônibus</h2>
+        <br />
+    </div>
+
+    <div class="page-content">
+        <form method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <br/>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+{% endblock logged_content %}
