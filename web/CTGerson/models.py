@@ -11,5 +11,5 @@ class Bus(models.Model):
         return self.plate
 
 
-# class Ocurrence(models.Model):
-#    busid = models.ForeignKey('CTGerson.Bus')
+#class Ocurrence(models.Model):
+#    busid = models.ForeignKey('CTGerson.Bus', on_delete=None)
