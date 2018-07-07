@@ -1,3 +1,6 @@
 [submodule "knot-cloud-source"]
 	path = knot-cloud-source
 	url = https://github.com/CESARBR/knot-cloud-source
+[submodule "knot-python-api"]
+	path = knot-python-api
+	url = https://github.com/ramonhpr/knot-python-api
