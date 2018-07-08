@@ -1,0 +1,15 @@
+{% extends 'base_logged.html' %}
+
+{% block logged_content %}
+    <div class="page-title">
+        <h2>Detalhes do ônibus {{ bus.id }}</h2>
+        <br />
+    </div>
+
+    <div class="page-content">
+        <p><strong>Número da linha: </strong>{{ bus.line_number }}</p>
+        <p><strong>Empresa: </strong>{{ bus.company }}</p>
+        <p><strong>Placa: </strong>{{ bus.plate }}</p>
+    </div>
+
+{% endblock logged_content %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import Bus
+from .models import Bus, Occurrence
 from .forms import BusForm
 
 
@@ -47,3 +47,12 @@ def remove_bus(request, pk):
     bus.delete()
 
     return redirect('bus_list')
+
+def bus_detail(request, pk):
+    bus = get_object_or_404(Bus, pk=pk)
+
+    return render(request, 'bus_detail.html', {'bus': bus})
+
+def occurrences_list(request):
+    occurrences = Occurrence.objects.all()
+    return render(request, 'occurrences_list.html', {'occurrences': occurrences})

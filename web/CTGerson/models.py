@@ -11,13 +11,13 @@ class Bus(models.Model):
         return self.plate
 
 
-class Ocurrence(models.Model):
-    busid = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT)
+class Occurrence(models.Model):
     date = models.DateField(auto_now_add=True)
+    bus = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT)
     alert_time = models.TimeField(auto_now_add=True)
     responded = models.BooleanField(default=False)
     response_time = models.TimeField(default=timezone.localtime)
-    responder_id = models.ForeignKey('auth.User', on_delete=models.PROTECT, default=3)
+    responder = models.ForeignKey('auth.User', on_delete=models.PROTECT, default=3)
     finish_time = models.TimeField(default=timezone.localtime)
     successfull = models.BooleanField(default=False)
     notes = models.TextField(blank=True)
