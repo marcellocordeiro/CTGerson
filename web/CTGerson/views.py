@@ -50,8 +50,9 @@ def remove_bus(request, pk):
 
 def bus_detail(request, pk):
     bus = get_object_or_404(Bus, pk=pk)
+    occurrences = Occurrence.objects.filter(bus=bus)
 
-    return render(request, 'bus_detail.html', {'bus': bus})
+    return render(request, 'bus_detail.html', {'bus': bus, 'occurrences': occurrences})
 
 def occurrences_list(request):
     occurrences = Occurrence.objects.all()

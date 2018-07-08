@@ -13,6 +13,7 @@
                     <th>Data</th>
                     <th>Ônibus</th>
                     <th>Horário do alerta</th>
+                    <th>Localização</th>
                     <th>Respondido</th>
                     <th>Horário da resposta</th>
                     <th>Respondente</th>
@@ -20,12 +21,13 @@
                     <th>Sucesso</th>
                     <th>Anotações</th>
                 </tr>
-    
+
                 {% for occurrence in occurrences %}
                     <tr>
                         <td>{{ occurrence.date }}</td>
                         <td><a href="{% url 'bus_detail' pk=occurrence.bus.pk %}">{{ occurrence.bus.line_number }} - {{ occurrence.bus.plate }}</a></td>
                         <td>{{ occurrence.alert_time }}</td>
+                        <td>lat: {{ occurrence.latitude }} <br />long: {{ occurrence.longitude }}</td>
                         {% if occurrence.responded %}
                                 <td>Sim</td>
                             {% else %}

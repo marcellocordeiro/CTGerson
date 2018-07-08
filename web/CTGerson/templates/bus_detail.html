@@ -7,9 +7,64 @@
     </div>
 
     <div class="page-content">
-        <p><strong>Número da linha: </strong>{{ bus.line_number }}</p>
-        <p><strong>Empresa: </strong>{{ bus.company }}</p>
-        <p><strong>Placa: </strong>{{ bus.plate }}</p>
+        <h4><strong>Número da linha: </strong>{{ bus.line_number }}</h4>
+        <h4><strong>Empresa: </strong>{{ bus.company }}</ph4>
+        <h4><strong>Placa: </strong>{{ bus.plate }}</h4>
+
+        <div>
+            <br />
+            <h3>Ocorrências</h3>
+
+            {% if occurrences %}
+                <table>
+                    <tr>
+                        <th>Data</th>
+                        <th>Ônibus</th>
+                        <th>Horário do alerta</th>
+                        <th>Localização</th>
+                        <th>Respondido</th>
+                        <th>Horário da resposta</th>
+                        <th>Respondente</th>
+                        <th>Horário da conclusão</th>
+                        <th>Sucesso</th>
+                        <th>Anotações</th>
+                    </tr>
+        
+                    {% for occurrence in occurrences %}
+                        <tr>
+                            <td>{{ occurrence.date }}</td>
+                            <td><a href="{% url 'bus_detail' pk=occurrence.bus.pk %}">{{ occurrence.bus.line_number }} - {{ occurrence.bus.plate }}</a></td>
+                            <td>{{ occurrence.alert_time }}</td>
+                            <td>lat: {{ occurrence.latitude }} <br />long: {{ occurrence.longitude }}</td>
+                            {% if occurrence.responded %}
+                                    <td>Sim</td>
+                                {% else %}
+                                    <td>Não</td>
+                                {% endif %}
+                            {% if occurrence.responded %}
+                                <td>{{ occurrence.response_time }}</td>
+                                <td>{{ occurrence.responder.username }}</td>
+                                <td>{{ occurrence.finish_time }}</td>
+                                {% if occurrence.successfull %}
+                                    <td>Sim</td>
+                                {% else %}
+                                    <td>Não</td>
+                                {% endif %}
+                                <td>{{ occurrence.notes }}</td>
+                            {% else %}
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>---</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>Nenhuma ocorrência encontrada</p>
+            {% endif %}
+        </div>
     </div>
 
 {% endblock logged_content %}

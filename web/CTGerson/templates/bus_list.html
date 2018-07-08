@@ -10,20 +10,18 @@
         {% if buses %}
             <table>
                 <tr>
-                    <th>ID</th>
                     <th>Número da linha</th>
-                    <th>Empresa</th>
                     <th>Placa</th>
+                    <th>Empresa</th>
                     <th>Editar</th>
                     <th>Remover</th>
                 </tr>
     
                 {% for bus in buses %}
                     <tr>
-                        <td>{{bus.id}}</td>
-                        <td>{{bus.line_number}}</td>
-                        <td>{{bus.company}}</td>
-                        <td>{{bus.plate}}</td>
+                        <td>{{ bus.line_number }}</td>
+                        <td><a href="{% url 'bus_detail' pk=bus.pk %}">{{ bus.plate }}</a></td>
+                        <td>{{ bus.company }}</td>
                         <td><a class="table-button" href="{% url 'edit_bus' pk=bus.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                         <td><a class="table-button remove-button" href="{% url 'remove_bus' pk=bus.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
                     </tr>

@@ -15,6 +15,8 @@ class Occurrence(models.Model):
     date = models.DateField(auto_now_add=True)
     bus = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT)
     alert_time = models.TimeField(auto_now_add=True)
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
     responded = models.BooleanField(default=False)
     response_time = models.TimeField(default=timezone.localtime)
     responder = models.ForeignKey('auth.User', on_delete=models.PROTECT, default=3)
