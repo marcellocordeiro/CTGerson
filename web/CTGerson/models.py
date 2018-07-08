@@ -10,6 +10,9 @@ class Bus(models.Model):
     def __str__(self):
         return self.plate
 
+    class Meta:
+        permissions = (("can_see_bus_list", "See bus list"),)
+
 
 class Occurrence(models.Model):
     date = models.DateField(auto_now_add=True)

@@ -1,22 +1,27 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.models import Permission
 from .models import Bus, Occurrence
 from .forms import BusForm
 
 
 @login_required
 def home(request):
-    return render(request, 'home.html', {})
+    permissions = Permission.objects.filter(user=request.user)
+
+    return render(request, 'home.html', {'permission': permissions})
 
 
 @login_required
+@permission_required('Bus.can_see_bus_list')
 def bus_list(request):
     buses = Bus.objects.all()
     return render(request, 'bus_list.html', {'buses': buses})
 
 
 @login_required
+@permission_required('Bus.can_see_bus_list')
 def register_bus(request):
     if request.method == "POST":
         form = BusForm(request.POST)
@@ -29,6 +34,7 @@ def register_bus(request):
 
 
 @login_required
+@permission_required('Bus.can_see_bus_list')
 def edit_bus(request, pk):
     bus = get_object_or_404(Bus, pk=pk)
 
@@ -45,6 +51,7 @@ def edit_bus(request, pk):
 
 
 @login_required
+@permission_required('Bus.can_see_bus_list')
 def remove_bus(request, pk):
     bus = Bus.objects.get(id=pk)
     bus.delete()
@@ -53,6 +60,7 @@ def remove_bus(request, pk):
 
 
 @login_required
+@permission_required('Bus.can_see_bus_list')
 def bus_detail(request, pk):
     bus = get_object_or_404(Bus, pk=pk)
     occurrences = Occurrence.objects.filter(bus=bus)
