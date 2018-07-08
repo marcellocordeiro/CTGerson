@@ -8,9 +8,8 @@ from .forms import BusForm
 
 @login_required
 def home(request):
-    permissions = Permission.objects.filter(user=request.user)
-
-    return render(request, 'home.html', {'permission': permissions})
+    permission = Permission.objects.filter(user=request.user, codename='can_see_bus_list')
+    return render(request, 'home.html', {'permission': permission})
 
 
 @login_required

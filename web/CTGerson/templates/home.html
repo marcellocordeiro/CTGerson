@@ -3,7 +3,7 @@
 {% block content %}
     <div class="options">
         <h2><a href="/lista_ocorrencias">Histórico de ocorrências</a></h2>
-        {% if "Bus.can_see_bus_list" in permissions.id %}
+        {% if permission %}
             <h2><a href="/lista_onibus">Lista de ônibus cadastrados</a><br /></h2>
         {% endif %}
     </div>
