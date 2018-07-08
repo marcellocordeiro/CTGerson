@@ -1,9 +1,16 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Permission
 from .models import Bus, Occurrence
 from .forms import BusForm
+
+
+def update_data(request):
+    data = {
+        'button_status': Occurrence.objects.all()[0].responded    #getData()
+    }
+    return JsonResponse(data)
 
 
 @login_required

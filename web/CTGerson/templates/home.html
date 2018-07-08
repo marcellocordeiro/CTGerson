@@ -1,5 +1,29 @@
 {% extends 'base.html' %}
 
+{% block javascript %}
+    <script>
+        var button_previous_status = null;
+
+        setInterval(function () {
+            $.ajax({
+                url: "/ajax/update_data/",
+                success: function (data) {
+                    if (data.button_status == true && button_previous_status == false) {
+                        alert('Nova ocorrência!');
+                    }
+
+                    button_previous_status = data.button_status;
+                }
+            });
+        }, 1000);
+
+        $(document).ready(function () {
+            setInterval(fetchdata, 5000);
+        });
+
+    </script>
+{% endblock javascript %}
+
 {% block content %}
     <div class="options">
         <h2><a href="/lista_ocorrencias">Histórico de ocorrências</a></h2>

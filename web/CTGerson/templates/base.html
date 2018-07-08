@@ -12,7 +12,7 @@
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
         <!--CSS (always at the end)-->
-        <link rel="stylesheet" href="{% static 'css/CTGerson.css' %}">
+        <link rel="stylesheet" href="{% static 'css/ctgerson.css' %}">
     </head>
 
     <body>
@@ -25,5 +25,11 @@
             {% block content %}
             {% endblock content %}
         </div>
+
+        <!--Pra dar refresh e ficar atualizando os dados pegos do knot-->
+            <script src="{% static 'javascript/jquery-3.1.0.min.js' %}"></script>
+
+            {% block javascript %}
+            {% endblock %}
     </body>
 </html>
