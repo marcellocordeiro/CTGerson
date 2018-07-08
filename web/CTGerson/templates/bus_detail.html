@@ -1,6 +1,6 @@
-{% extends 'base_logged.html' %}
+{% extends "base.html" %}
 
-{% block logged_content %}
+{% block content %}
     <div class="page-title">
         <h2>Detalhes do ônibus {{ bus.id }}</h2>
         <br />
@@ -67,4 +67,4 @@
         </div>
     </div>
 
-{% endblock logged_content %}
+{% endblock content %}
