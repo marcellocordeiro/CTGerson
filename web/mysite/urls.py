@@ -21,6 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('ajax/update_data/', views.update_data, name='update_data'),
+    path('ajax/update_position/', views.update_position, name='update_position'),
+    path('occurrence/', views.occurrence, name='occurrence'),
     path('', views.home, name='home'),
     path('lista_onibus/', views.bus_list, name='bus_list'),
     path('cadastrar_onibus/', views.register_bus, name = 'register_bus'),

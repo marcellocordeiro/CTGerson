@@ -19,6 +19,19 @@ def home(request):
     return render(request, 'home.html', {'permission': permission})
 
 
+def update_position(request):
+    data = {
+        'latitude': Occurrence.objects.all()[0].latitude,    #getData()
+        'longitude': Occurrence.objects.all()[0].longitude,    #getData()
+    }
+    return JsonResponse(data)
+
+
+@login_required
+def occurrence(request):
+    return render(request, 'occurrence.html', {})
+
+
 @login_required
 @permission_required('Bus.can_see_bus_list')
 def bus_list(request):
