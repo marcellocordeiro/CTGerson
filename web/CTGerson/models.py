@@ -26,3 +26,12 @@ class Occurrence(models.Model):
     finish_time = models.TimeField(default=timezone.localtime)
     successfull = models.BooleanField(default=False)
     notes = models.TextField(blank=True)
+
+
+class Officer_location(models.Model):
+    officer = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+
+    def __str__(self):
+        return self.officer.name
