@@ -6,30 +6,27 @@ from .models import Bus, Occurrence
 from .forms import BusForm
 
 
+def occurrence(request):
+    return render(request, 'occurrence.html', {})
+
+
 def update_data(request):
     data = {
-        'button_status': Occurrence.objects.all()[0].responded    #getData()
-    }
-    return JsonResponse(data)
-
-
-@login_required
-def home(request):
-    permission = Permission.objects.filter(user=request.user, codename='can_see_bus_list')
-    return render(request, 'home.html', {'permission': permission})
-
-
-def update_position(request):
-    data = {
+        'button_status': Occurrence.objects.all()[0].responded,    #getData()
         'latitude': Occurrence.objects.all()[0].latitude,    #getData()
         'longitude': Occurrence.objects.all()[0].longitude,    #getData()
     }
     return JsonResponse(data)
 
 
+
+
+
+
 @login_required
-def occurrence(request):
-    return render(request, 'occurrence.html', {})
+def home(request):
+    permission = Permission.objects.filter(user=request.user, codename='can_see_bus_list')
+    return render(request, 'home.html', {'permission': permission})
 
 
 @login_required

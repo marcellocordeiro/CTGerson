@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+    <script>
+        var button_previous_status = false;
+        var rejected = false;
+
+        setInterval(function () {
+            $.ajax({
+                url: "/ajax/update_data/",
+                success: function (data) {
+                    if (data.button_status == true && (button_previous_status == false || rejected == false)) {
+                        $('#alert').html('<h3>Nova ocorrência! <a href="/occurrence">Aceitar</a><a href="/">      Rejeitar</a></h3>')
+                    } else {
+                        $('#alert').html('<h3>Nenhuma ocorrência no momento!</h3>')
+                    }
+
+                    button_previous_status = data.button_status;
+                }
+            });
+        }, 1000);
+
+        $(document).ready(function () {
+            setInterval(fetchdata, 5000);
+        });
+    </script>
+{% endblock javascript %}
+
+{% block alert %}
+    <div id="alert">
+        <br />
+        <br />
+    </div>
+
+    <br />
+{% endblock alert %}

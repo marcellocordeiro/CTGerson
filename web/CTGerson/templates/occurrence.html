@@ -1,12 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
 {% block javascript %}
     <script>
         setInterval(function () {
             $.ajax({
-                url: "/ajax/update_position/",
+                url: "/ajax/update_data/",
                 success: function (data) {
-
                     $('#lat').hide().html(data.latitude).fadeIn('slow')
                     $('#long').hide().html(data.longitude).fadeIn('slow')
                 }
@@ -19,6 +18,9 @@
 
     </script>
 {% endblock javascript %}
+
+{% block alert %}
+{% endblock alert %}
 
 {% block content %}
     <div class="page-title">
