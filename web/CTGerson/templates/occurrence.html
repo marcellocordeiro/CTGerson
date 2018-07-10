@@ -35,22 +35,35 @@
 {% endblock alert %}
 
 {% block content %}
-    <div class="page-title">
+    <div class="page-title center">
         <h2>Ocorrência</h2>
         <br />
+        
     </div>
 
     <div class="page-content" id="detail">
-        <h3>Ônibus</h3>
-        <h4><strong>Número da linha: </strong>{{ bus.line_number }}</h4>
-        <h4><strong>Empresa: </strong>{{ bus.company }}</ph4>
-        <h4><strong>Placa: </strong>{{ bus.plate }}</h4>
-        <br />
+        <div class="row center" style="margin-top: 30px;">
+            <div class="col s12 m6">
+                <h3>Ônibus</h3>
+                <h5><strong>Número da linha: </strong>{{ bus.line_number }}</h5>
+                <h5><strong>Empresa: </strong>{{ bus.company }}</h5>
+                <h5><strong>Placa: </strong>{{ bus.plate }}</h5>
+                <br />
+            </div>
 
-        <h3>Localização:</h3>
-        <h4>Latitude: <span id="lat">{{ latitude }}</span></h4>
-        <h4>Longitude: <span id="long">{{ longitude }}</span></h4>
+            <div class="col s12 m6">
+                <h3>Localização:</h3>
+                <h5>Latitude: <span id="lat">{{ latitude }}</span></h5>
+                <h5>Longitude: <span id="long">{{ longitude }}</span></h5>
+            </div>
+            
+        </div>
+        
+        <div class="center" style="margin: 30px 0;">
+            <a href="http://127.0.0.1:8000/salvar_ocorrencia/" class="waves-effect waves-light btn-large grey darken-4"><i class="material-icons left">clear</i>Encerrar</a>
+        </div>
+        
+        
 
-        <a href="http://127.0.0.1:8000/salvar_ocorrencia/">Encerrar</a>
     </div>
 {% endblock content %}
