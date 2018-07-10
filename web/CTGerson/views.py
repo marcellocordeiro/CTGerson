@@ -10,6 +10,14 @@ from .forms import BusForm, OccurrenceForm
 import math
 
 
+
+def get_officer_location(request, lat, long):
+    if request.user.groups.filter(name='Police Officers').exists():
+        a = 4
+
+    return redirect('/')
+
+
 def occurrence(request):
     admin = request.user.groups.filter(name='Administrators').exists()
 

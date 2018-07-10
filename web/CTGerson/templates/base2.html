@@ -15,6 +15,14 @@
             });
         }, 1000);
 
+        setInterval(function () {
+            navigator.geolocation.getCurrentPosition(function(location) {
+                console.log('/get_officer_location/' + location.coords.latitude + '/' + location.coords.longitude + '/')
+
+                window.location = '/get_officer_location/' + location.coords.latitude + '/' + location.coords.longitude + '/'
+            });
+        }, 1000);
+
         $(document).ready(function () {
             setInterval(fetchdata, 5000);
         });

@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from CTGerson import views
 
 urlpatterns = [
@@ -25,11 +25,12 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('lista_onibus/', views.bus_list, name='bus_list'),
     path('cadastrar_onibus/', views.register_bus, name = 'register_bus'),
-    path('editar_onibus/(?P<pk>[0-9]+)/', views.edit_bus, name='edit_bus'),
-    path('remover_onibus/(?P<pk>[0-9]+)/', views.remove_bus, name = 'remove_bus'),
-    path('onibus/(?P<pk>[0-9]+)/', views.bus_detail, name='bus_detail'),
+    re_path('editar_onibus/(?P<pk>[0-9]+)/', views.edit_bus, name='edit_bus'),
+    re_path('remover_onibus/(?P<pk>[0-9]+)/', views.remove_bus, name = 'remove_bus'),
+    re_path('onibus/(?P<pk>[0-9]+)/', views.bus_detail, name='bus_detail'),
     path('salvar_ocorrencia/', views.update_occurrence, name='update_occurrence'),
     path('lista_ocorrencias/', views.occurrences_list, name='occurrences_list'),
     path('ocorrencia/', views.occurrence, name='occurrence'),
-    path('reject_alert/', views.reject_alert, name='reject_alert')
+    path('reject_alert/', views.reject_alert, name='reject_alert'),
+    path('get_officer_location/<lat>/<long>', views.get_officer_location, name='get_officer_location')
 ]
