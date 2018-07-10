@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect, get_object_or
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Permission, User
-from django.db import models
+from django.db.models import Min
 from .models import Bus, Occurrence, Distance, Meshblu
 from .forms import BusForm
 import math
@@ -24,9 +24,11 @@ def update_data(request):
                 distance_obj = Distance.objects.get(officer=request.user)
 
                 #get nearest officer
-                nearest_username = Distance.objects.latest('distance')
+                min_distance = Distance.objects.all().aggregate(Min('distance'))
+                nearest_officers = Distance.objects.filter(distance=min_distance["distance__min"])
+                nearest_officer = nearest_officers[0].officer
 
-                if User.objects.get(username=nearest_username) == request.user:
+                if nearest_officer == request.user:
                     return JsonResponse({'alert': True})
                 else:
                     return JsonResponse({'alert': False})
