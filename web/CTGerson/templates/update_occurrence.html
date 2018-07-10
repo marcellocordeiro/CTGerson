@@ -7,6 +7,10 @@
 {% endblock alert %}
 
 {% block content %}
+    <script>
+        
+    </script>
+
     <div class="page-title">
         <h2>Occorrência</h2>
         <br />
@@ -16,7 +20,9 @@
         <form method="POST">{% csrf_token %}
             {{ form.as_p }}
             <br/>
-            <button type="submit">Salvar</button>
+            <button class="btn waves-effect waves-light blue accent-3" type="submit">Salvar
+            <i class="material-icons right">check</i>
+          </button>
         </form>
     </div>
 {% endblock content %}
