@@ -4,8 +4,9 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Permission, User
 from django.db.models import Min
 from django.utils import timezone
+from django.utils.timezone import localtime
 from .models import Bus, Occurrence, Distance, Meshblu
-from .forms import BusForm
+from .forms import BusForm, OccurrenceForm
 import math
 
 
@@ -16,9 +17,9 @@ def occurrence(request):
     thing = Meshblu.objects.first()
 
     #update occurrence
-    occurrence = Occurrence.objects.filter(closed=False, bus=thing.bus)
+    occurrence = Occurrence.objects.get(closed=False, bus=thing.bus)
     occurrence.responded = True
-    occurrence.response_time = timezone.localtime
+    occurrence.response_time = localtime(timezone.now())
     occurrence.responder = request.user
     occurrence.save()
 
@@ -32,11 +33,20 @@ def update_occurrence(request):
     thing = Meshblu.objects.first()
 
     #update occurrence
-    occurrence = Occurrence.objects.filter(closed=False, bus=thing.bus)
-    occurrence.finish_time = timezone.localtime
-    occurrence.save()
+    occurrence = Occurrence.objects.get(closed=False, bus=thing.bus)
+    occurrence.finish_time = localtime(timezone.now())
+    occurrence.closed = True
 
-    return render(request, 'update_occurrence.html', {'admin': admin})
+    if request.method == "POST":
+        form = OccurrenceForm(request.POST, instance=occurrence)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form = OccurrenceForm(instance=occurrence)
+
+    return render(request, 'update_occurrence.html', {'admin': admin, 'form': form})
 
 
 def update_data(request):
@@ -54,14 +64,17 @@ def update_data(request):
                 nearest_officer = Distance.objects.filter(distance=min_distance["distance__min"]).first().officer
 
                 if nearest_officer == request.user:
+                    #open occurrence (firs alert signal)
+                    try:
+                        occurrence = Occurrence.objects.get(closed=False, bus=thing.bus)
+                    except Occurrence.DoesNotExist:
+                        occurrence = Occurrence(bus=thing.bus, latitude=thing.latitude, longitude=thing.longitude)
+                        occurrence.save()
+
                     return JsonResponse({'alert': True})
                 else:
                     return JsonResponse({'alert': False})
             except Distance.DoesNotExist:
-                #open occurrence (firs alert signal)
-                occurrence = Occurrence(bus=thing.bus, alert_time=timezone.localtime, latitude=thing.latitude, longitude=thing.longitude)
-                occurrence.save()
-
                 #get officer location
                 #TODO: replace this with real location
                 officer_latitude = request.user.id * 3
@@ -73,6 +86,13 @@ def update_data(request):
                 distance_obj.save()
 
                 return JsonResponse({'alert': False})
+        else:
+            try:
+                occurrence = Occurrence.objects.get(closed=False, bus=thing.bus)
+                return JsonResponse({'alert': True})
+            except Occurrence.DoesNotExist:
+                return JsonResponse({'alert': False})
+
 
     return JsonResponse({'alert': False})
 

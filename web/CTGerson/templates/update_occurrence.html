@@ -1,0 +1,22 @@
+{% extends "base2.html" %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block alert %}
+{% endblock alert %}
+
+{% block content %}
+    <div class="page-title">
+        <h2>Occorrência</h2>
+        <br />
+    </div>
+
+    <div class="page-content">
+        <form method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <br/>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+{% endblock content %}
