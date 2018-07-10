@@ -8,20 +8,18 @@ from django.utils.timezone import localtime
 from .models import Bus, Occurrence, Distance, Meshblu
 from .forms import BusForm, OccurrenceForm
 import math
+import serial
 
 
+SERIAL_PORT = '/dev/ttyUSB0'
+SERIAL_RATE = 9600
 
-def get_officer_location(request, lat, long):
-    if request.user.groups.filter(name='Police Officers').exists():
-        a = 4
-
-    return redirect('/')
 
 
 def occurrence(request):
     admin = request.user.groups.filter(name='Administrators').exists()
 
-    #TODO: replace this with getData() / python code to extract from serial
+    #get bus reference
     thing = Meshblu.objects.first()
 
     #update occurrence
@@ -40,7 +38,7 @@ def occurrence(request):
 def update_occurrence(request):
     admin = request.user.groups.filter(name='Administrators').exists()
 
-    #TODO: replace this with getData() / python code to extract from serial
+    #get bus reference
     thing = Meshblu.objects.first()
 
     #update occurrence
@@ -62,9 +60,23 @@ def update_occurrence(request):
 
 def update_data(request):
     if request.user.groups.filter(name='Police Officers').exists():
-        #get updated information from meshblu
-        #TODO: replace this with getData() / python code to extract from serial
+        #get bus reference
         thing = Meshblu.objects.first()
+ 
+        #get 
+        ser = serial.Serial(SERIAL_PORT, SERIAL_RATE, timeout=1)
+        reading = ser.readline().decode('utf-8')
+        if reading == '':
+            thing.button = False
+            print("data not ready")
+        else:
+            print(reading)
+            thing.button = True
+            reading = reading.split(",")
+            thing.latitude, thing.longitude = float(reading[0]), float(reading[1])
+
+        ser.close()
+
 
         try:
             distance_obj = Distance.objects.get(officer=request.user)
@@ -96,8 +108,11 @@ def update_data(request):
                 distance_obj = Distance(officer=request.user, bus=thing.bus, distance=distance)
                 distance_obj.save()
 
+                #thing.button = False
                 return JsonResponse({'alert': False})
 
+
+    #thing.button = False
     return JsonResponse({'alert': False})
 
 
