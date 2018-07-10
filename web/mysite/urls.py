@@ -29,6 +29,5 @@ urlpatterns = [
     path('onibus/(?P<pk>[0-9]+)/', views.bus_detail, name='bus_detail'),
     path('lista_ocorrencias/', views.occurrences_list, name='occurrences_list'),
 
-
     path('occurrence/', views.occurrence, name='occurrence'),
 ]

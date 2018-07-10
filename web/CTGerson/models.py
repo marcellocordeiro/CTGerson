@@ -28,10 +28,16 @@ class Occurrence(models.Model):
     notes = models.TextField(blank=True)
 
 
-class Officer_location(models.Model):
+class Distance(models.Model):
     officer = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    bus = models.ForeignKey('CTGerson.Bus', on_delete=models.CASCADE)
+    distance = models.FloatField()
 
     def __str__(self):
         return self.officer.username
+
+
+class Meshblu(models.Model):
+    button = models.BooleanField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()

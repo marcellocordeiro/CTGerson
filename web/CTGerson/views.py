@@ -1,22 +1,49 @@
 from django.shortcuts import render, render_to_response, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import Permission
-from .models import Bus, Occurrence
+from django.contrib.auth.models import Permission, User
+from django.db import models
+from .models import Bus, Occurrence, Distance, Meshblu
 from .forms import BusForm
+import math
 
 
 def occurrence(request):
-    return render(request, 'occurrence.html', {})
+    admin = request.user.groups.filter(name='Administrators').exists()
+    return render(request, 'occurrence.html', {'admin': admin})
 
 
 def update_data(request):
-    data = {
-        'button_status': Occurrence.objects.all()[0].responded,    #getData()
-        'latitude': Occurrence.objects.all()[0].latitude,    #getData()
-        'longitude': Occurrence.objects.all()[0].longitude,    #getData()
-    }
-    return JsonResponse(data)
+    if request.user.groups.filter(name='Police Officers').exists():
+        #get updated information from meshblu
+        #TODO: replace this with getData() / python code to extract from serial
+        thing = Meshblu.objects.get(id=1)
+
+        if thing.button:
+            try:
+                distance_obj = Distance.objects.get(officer=request.user)
+
+                #get nearest officer
+                nearest_username = Distance.objects.latest('distance')
+
+                if User.objects.get(username=nearest_username) == request.user:
+                    return JsonResponse({'alert': True})
+                else:
+                    return JsonResponse({'alert': False})
+            except Distance.DoesNotExist:
+                #get officer location
+                #TODO: replace this with real location
+                officer_latitude = request.user.id * 3
+                officer_longitude = request.user.id * (-4)
+
+                #calculate distance and send to web database
+                distance = math.sqrt((thing.latitude - officer_latitude) ** 2 + (thing.longitude - officer_longitude) ** 2)
+                distance_obj = Distance(officer=request.user, bus=Bus.objects.get(plate='PGC-7504'), distance=distance)
+                distance_obj.save()
+
+                return JsonResponse({'alert': False})
+
+    return JsonResponse({'alert': False})
 
 
 
@@ -25,20 +52,22 @@ def update_data(request):
 
 @login_required
 def home(request):
-    permission = Permission.objects.filter(user=request.user, codename='can_see_bus_list')
-    return render(request, 'home.html', {'permission': permission})
+    admin = request.user.groups.filter(name='Administrators').exists()
+    return render(request, 'home.html', {'admin': admin})
 
 
 @login_required
 @permission_required('Bus.can_see_bus_list')
 def bus_list(request):
+    admin = request.user.groups.filter(name='Administrators').exists()
     buses = Bus.objects.all()
-    return render(request, 'bus_list.html', {'buses': buses})
+    return render(request, 'bus_list.html', {'admin': admin, 'buses': buses})
 
 
 @login_required
 @permission_required('Bus.can_see_bus_list')
 def register_bus(request):
+    admin = request.user.groups.filter(name='Administrators').exists()
     if request.method == "POST":
         form = BusForm(request.POST)
         if form.is_valid():
@@ -46,12 +75,13 @@ def register_bus(request):
             return redirect('bus_list')
     else:
         form = BusForm()
-    return render(request, 'register_bus.html', {'form': form})
+    return render(request, 'register_bus.html', {'admin': admin, 'form': form})
 
 
 @login_required
 @permission_required('Bus.can_see_bus_list')
 def edit_bus(request, pk):
+    admin = request.user.groups.filter(name='Administrators').exists()
     bus = get_object_or_404(Bus, pk=pk)
 
     if request.method == "POST":
@@ -63,7 +93,7 @@ def edit_bus(request, pk):
     else:
         form = BusForm(instance=bus)
 
-    return render(request, 'edit_bus.html', {'form': form})
+    return render(request, 'edit_bus.html', {'admin': admin, 'form': form})
 
 
 @login_required
@@ -78,13 +108,15 @@ def remove_bus(request, pk):
 @login_required
 @permission_required('Bus.can_see_bus_list')
 def bus_detail(request, pk):
+    admin = request.user.groups.filter(name='Administrators').exists()
     bus = get_object_or_404(Bus, pk=pk)
     occurrences = Occurrence.objects.filter(bus=bus)
 
-    return render(request, 'bus_detail.html', {'bus': bus, 'occurrences': occurrences})
+    return render(request, 'bus_detail.html', {'admin': admin, 'bus': bus, 'occurrences': occurrences})
 
 
 @login_required
 def occurrences_list(request):
+    admin = request.user.groups.filter(name='Administrators').exists()
     occurrences = Occurrence.objects.all()
-    return render(request, 'occurrences_list.html', {'occurrences': occurrences})
+    return render(request, 'occurrences_list.html', {'admin': admin, 'occurrences': occurrences})
