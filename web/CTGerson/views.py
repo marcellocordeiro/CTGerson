@@ -23,6 +23,9 @@ def occurrence(request):
     occurrence.responder = request.user
     occurrence.save()
 
+    for element in Distance.objects.filter(bus=thing.bus):
+        element.delete()
+
     return render(request, 'occurrence.html', {'admin': admin, 'bus': thing.bus})
 
 
@@ -55,26 +58,26 @@ def update_data(request):
         #TODO: replace this with getData() / python code to extract from serial
         thing = Meshblu.objects.first()
 
-        if thing.button:
-            try:
-                distance_obj = Distance.objects.get(officer=request.user)
+        try:
+            distance_obj = Distance.objects.get(officer=request.user)
 
-                #get nearest officer
-                min_distance = Distance.objects.all().aggregate(Min('distance'))
-                nearest_officer = Distance.objects.filter(distance=min_distance["distance__min"]).first().officer
+            #get nearest officer
+            min_distance = Distance.objects.filter(bus=thing.bus).aggregate(Min('distance'))
+            nearest_officer = Distance.objects.filter(bus=thing.bus, distance=min_distance["distance__min"]).first().officer
 
-                if nearest_officer == request.user:
-                    #open occurrence (firs alert signal)
-                    try:
-                        occurrence = Occurrence.objects.get(closed=False, bus=thing.bus)
-                    except Occurrence.DoesNotExist:
-                        occurrence = Occurrence(bus=thing.bus, latitude=thing.latitude, longitude=thing.longitude)
-                        occurrence.save()
+            if nearest_officer == request.user:
+                #open occurrence (firs alert signal)
+                try:
+                    occurrence = Occurrence.objects.get(closed=False, bus=thing.bus)
+                except Occurrence.DoesNotExist:
+                    occurrence = Occurrence(bus=thing.bus, latitude=thing.latitude, longitude=thing.longitude)
+                    occurrence.save()
 
-                    return JsonResponse({'alert': True})
-                else:
-                    return JsonResponse({'alert': False})
-            except Distance.DoesNotExist:
+                return JsonResponse({'alert': True})
+            else:
+                return JsonResponse({'alert': False})
+        except Distance.DoesNotExist:
+            if thing.button:
                 #get officer location
                 #TODO: replace this with real location
                 officer_latitude = request.user.id * 3
@@ -86,13 +89,6 @@ def update_data(request):
                 distance_obj.save()
 
                 return JsonResponse({'alert': False})
-        else:
-            try:
-                occurrence = Occurrence.objects.get(closed=False, bus=thing.bus)
-                return JsonResponse({'alert': True})
-            except Occurrence.DoesNotExist:
-                return JsonResponse({'alert': False})
-
 
     return JsonResponse({'alert': False})
 
