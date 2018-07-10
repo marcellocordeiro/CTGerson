@@ -120,5 +120,5 @@ def bus_detail(request, pk):
 @login_required
 def occurrences_list(request):
     admin = request.user.groups.filter(name='Administrators').exists()
-    occurrences = Occurrence.objects.all()
+    occurrences = Occurrence.objects.all().filter(closed=True)
     return render(request, 'occurrences_list.html', {'admin': admin, 'occurrences': occurrences})

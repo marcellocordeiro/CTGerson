@@ -15,9 +15,10 @@ class Bus(models.Model):
 
 
 class Occurrence(models.Model):
+    closed = models.BooleanField(default=False)
     date = models.DateField(auto_now_add=True)
-    bus = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT)
-    alert_time = models.TimeField(auto_now_add=True)
+    bus = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT, default=1)
+    alert_time = models.TimeField(default=timezone.localtime)
     latitude = models.FloatField(default=0.0)
     longitude = models.FloatField(default=0.0)
     responded = models.BooleanField(default=False)
@@ -38,6 +39,10 @@ class Distance(models.Model):
 
 
 class Meshblu(models.Model):
+    bus = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT, default=1)
     button = models.BooleanField()
     latitude = models.FloatField()
     longitude = models.FloatField()
+
+    def __str__(self):
+        return self.bus.plate
