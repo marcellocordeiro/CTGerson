@@ -1,14 +1,18 @@
 {% extends 'base2.html' %}
 
 {% block content %}
+    <div class="row" style="margin-top: 30px;">
+        <a href="http://127.0.0.1:8000/" class="waves-effect waves-light btn-small grey darken-4"><i class="material-icons left">arrow_back</i>Voltar</a>
+    </div>
+
     <div class="page-title">
-        <h2>Histórico de ocorrências</h2>
+        <h2 style="text-align: center;">Histórico de ocorrências</h2>
         <br />
     </div>
 
     <div class="page-content">
         {% if occurrences %}
-            <table>
+            <table class="striped responsive-table">
                 <tr>
                     <th>Data</th>
                     <th>Ônibus</th>
@@ -19,7 +23,7 @@
                     <th>Respondente</th>
                     <th>Horário da conclusão</th>
                     <th>Sucesso</th>
-                    <th>Anotações</th>
+                    <th class="hide-on-small-and-down">Anotações</th>
                 </tr>
 
                 {% for occurrence in occurrences %}
@@ -29,9 +33,9 @@
                         <td>{{ occurrence.alert_time }}</td>
                         <td>lat: {{ occurrence.latitude }} <br />long: {{ occurrence.longitude }}</td>
                         {% if occurrence.responded %}
-                                <td>Sim</td>
+                                <td><i class="material-icons" style="color: #00cb37;">check</i></td>
                             {% else %}
-                                <td>Não</td>
+                                <td><i class="material-icons" style="color: #ff272e;">clear</i></td>
                             {% endif %}
                         {% if occurrence.responded %}
                             <td>{{ occurrence.response_time }}</td>
@@ -42,7 +46,7 @@
                             {% else %}
                                 <td>Não</td>
                             {% endif %}
-                            <td>{{ occurrence.notes }}</td>
+                        <td class="hide-on-small-and-down"><p style="max-width: 200px;">{{ occurrence.notes }}</p></td>
                         {% else %}
                             <td>---</td>
                             <td>---</td>

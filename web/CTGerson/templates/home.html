@@ -1,10 +1,45 @@
 {% extends 'base2.html' %}
 
 {% block content %}
-    <div class="options">
-        <h2><a href="/lista_ocorrencias">Histórico de ocorrências</a></h2>
-        {% if admin %}
-            <h2><a href="/lista_onibus">Lista de ônibus cadastrados</a><br /></h2>
-        {% endif %}
+    <div class="options center" style="padding-top: 5%;">
+        <div class="row center">
+            <div class="col s12 m6">
+              <div class="card blue accent-3 hoverable">
+                <div class="card-content white-text">
+                  <span class="card-title flow-text">Histórico de Ocorrências</span>
+                </div>
+                <div class="card-action">
+                  <a href="/lista_ocorrencias">Visualizar</a>
+                </div>
+              </div>
+            </div>
+            {% if admin %}
+            <div class="col s12 m6">
+              <div class="card blue accent-3 hoverable">
+                <div class="card-content white-text">
+                  <span class="card-title flow-text">Ônibus Cadastrados</span>
+                </div>
+                <div class="card-action">
+                  <a href="/lista_onibus">Visualizar</a>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        
+        <div class="row center">
+            {% if admin %}
+            <div class="col s12 m6">
+              <div class="card blue accent-3 hoverable">
+                <div class="card-content white-text">
+                  <span class="card-title flow-text">Cadastrar Novo Ônibus</span>
+                </div>
+                <div class="card-action">
+                  <a href="/cadastrar_onibus">Cadastrar</a>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
     </div>
 {% endblock content %}

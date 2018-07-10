@@ -1,14 +1,19 @@
 {% extends 'base2.html' %}
 
 {% block content %}
+
+    <div class="row" style="margin-top: 30px;">
+        <a href="http://127.0.0.1:8000/" class="waves-effect waves-light btn-small grey darken-4"><i class="material-icons left">arrow_back</i>Voltar</a>
+    </div>
+
     <div class="page-title">
-        <h2>Lista de ônibus cadastrados</h2>
+        <h2 style="text-align: center;">Lista de ônibus cadastrados</h2>
         <br />
     </div>
 
     <div class="page-content">
         {% if buses %}
-            <table>
+            <table class="striped">
                 <tr>
                     <th>Número da linha</th>
                     <th>Placa</th>
@@ -22,8 +27,8 @@
                         <td>{{ bus.line_number }}</td>
                         <td><a href="{% url 'bus_detail' pk=bus.pk %}">{{ bus.plate }}</a></td>
                         <td>{{ bus.company }}</td>
-                        <td><a class="table-button" href="{% url 'edit_bus' pk=bus.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                        <td><a class="table-button remove-button" href="{% url 'remove_bus' pk=bus.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        <td><a class="table-button" href="{% url 'edit_bus' pk=bus.pk %}"><i class="material-icons" style="color: #1176ff;">edit</i></a></td>
+                        <td><a class="table-button remove-button" href="{% url 'remove_bus' pk=bus.pk %}"><i class="material-icons" style="color: #ff2f2f;">remove_circle</i></a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -32,7 +37,7 @@
         {% endif %}
     
         <br />
-        <p><a class="button" href="/cadastrar_onibus">Adicionar</a></p>
+        <p><a class="btn-floating btn-medium waves-effect waves-light blue accent-3" href="/cadastrar_onibus"><i class="material-icons">add</i></a></p>
     </div>
 
 {% endblock content %}

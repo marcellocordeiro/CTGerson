@@ -7,6 +7,8 @@
     <form method="POST">{% csrf_token %}
         {{ form.as_p }}
         <br/>
-        <button type="submit">Cadastrar</button>
+        <button class="btn waves-effect waves-light blue accent-3" type="submit" name="action">Cadastrar
+            <i class="material-icons right">directions_bus</i>
+          </button>
     </form>
 {% endblock content %}

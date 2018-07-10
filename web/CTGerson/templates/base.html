@@ -4,21 +4,33 @@
     <head>
         <title>CTGerson</title>
 
-        <!--Bootstrap-->
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-        <!--Custom Fonts-->
+        <!--Custom Fonts-->        
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat|Righteous" rel="stylesheet">
+        
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <!--CSS (always at the end)-->
-        <link rel="stylesheet" href="{% static 'css/ctgerson.css' %}">
+        <link rel="stylesheet" href="{% static 'css/CTGerson.css' %}">
     </head>
 
     <body>
-        <div class="page-header">
-            <h1><a href="/">CTGerson</a></h1>
-            <button><a href="http://127.0.0.1:8000/accounts/logout">Logout</a></button>
+        <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+              <a href="http://127.0.0.1:8000" class="brand-logo">CTGerson<i style="color: white;" class="material-icons right">directions_bus</i></a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="http://127.0.0.1:8000/admin">Admin</a></li>
+                <li><a href="http://127.0.0.1:8000/accounts/logout">Logout</a></li>
+              </ul>
+            </div>
+          </nav>
+            
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="http://127.0.0.1:8000/admin">Admin</a></li>
+                <li><a href="http://127.0.0.1:8000/accounts/logout">Logout</a></li>
+              </ul>
         </div>
         
         <div class="content container">
@@ -30,9 +42,10 @@
         </div>
 
         <!--Pra dar refresh e ficar atualizando os dados pegos do knot-->
-            <script src="{% static 'javascript/jquery-3.1.0.min.js' %}"></script>
+        <script src="{% static 'javascript/jquery-3.1.0.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'javascript/materialize.js' %}"></script>
 
-            {% block javascript %}
-            {% endblock %}
+        {% block javascript %}
+        {% endblock %}
     </body>
 </html>
