@@ -41,7 +41,16 @@
     </div>
 
     <div class="page-content" id="detail">
-        <h3>Latitude: <span id="lat">{{ latitude }}</span></h3>
-        <h3>Longitude: <span id="long">{{ longitude }}</span></h3>
+        <h3>Ônibus</h3>
+        <h4><strong>Número da linha: </strong>{{ bus.line_number }}</h4>
+        <h4><strong>Empresa: </strong>{{ bus.company }}</ph4>
+        <h4><strong>Placa: </strong>{{ bus.plate }}</h4>
+        <br />
+
+        <h3>Localização:</h3>
+        <h4>Latitude: <span id="lat">{{ latitude }}</span></h4>
+        <h4>Longitude: <span id="long">{{ longitude }}</span></h4>
+
+        <a href="/salvar_ocorrencia/">Encerrar</a>
     </div>
 {% endblock content %}

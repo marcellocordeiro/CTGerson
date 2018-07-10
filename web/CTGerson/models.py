@@ -16,7 +16,7 @@ class Bus(models.Model):
 
 class Occurrence(models.Model):
     closed = models.BooleanField(default=False)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.localdate)
     bus = models.ForeignKey('CTGerson.Bus', on_delete=models.PROTECT, default=1)
     alert_time = models.TimeField(default=timezone.localtime)
     latitude = models.FloatField(default=0.0)

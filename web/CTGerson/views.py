@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Permission, User
 from django.db.models import Min
+from django.utils import timezone
 from .models import Bus, Occurrence, Distance, Meshblu
 from .forms import BusForm
 import math
@@ -10,7 +11,32 @@ import math
 
 def occurrence(request):
     admin = request.user.groups.filter(name='Administrators').exists()
-    return render(request, 'occurrence.html', {'admin': admin})
+
+    #TODO: replace this with getData() / python code to extract from serial
+    thing = Meshblu.objects.first()
+
+    #update occurrence
+    occurrence = Occurrence.objects.filter(closed=False, bus=thing.bus)
+    occurrence.responded = True
+    occurrence.response_time = timezone.localtime
+    occurrence.responder = request.user
+    occurrence.save()
+
+    return render(request, 'occurrence.html', {'admin': admin, 'bus': thing.bus})
+
+
+def update_occurrence(request):
+    admin = request.user.groups.filter(name='Administrators').exists()
+
+    #TODO: replace this with getData() / python code to extract from serial
+    thing = Meshblu.objects.first()
+
+    #update occurrence
+    occurrence = Occurrence.objects.filter(closed=False, bus=thing.bus)
+    occurrence.finish_time = timezone.localtime
+    occurrence.save()
+
+    return render(request, 'update_occurrence.html', {'admin': admin})
 
 
 def update_data(request):
@@ -32,6 +58,10 @@ def update_data(request):
                 else:
                     return JsonResponse({'alert': False})
             except Distance.DoesNotExist:
+                #open occurrence (firs alert signal)
+                occurrence = Occurrence(bus=thing.bus, alert_time=timezone.localtime, latitude=thing.latitude, longitude=thing.longitude)
+                occurrence.save()
+
                 #get officer location
                 #TODO: replace this with real location
                 officer_latitude = request.user.id * 3
