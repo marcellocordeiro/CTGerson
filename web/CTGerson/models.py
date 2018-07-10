@@ -32,6 +32,7 @@ class Occurrence(models.Model):
 class Distance(models.Model):
     officer = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     bus = models.ForeignKey('CTGerson.Bus', on_delete=models.CASCADE)
+    rejected = models.BooleanField(default=False)
     distance = models.FloatField()
 
     def __str__(self):

@@ -62,7 +62,7 @@ def update_data(request):
             distance_obj = Distance.objects.get(officer=request.user)
 
             #get nearest officer
-            min_distance = Distance.objects.filter(bus=thing.bus).aggregate(Min('distance'))
+            min_distance = Distance.objects.filter(bus=thing.bus, rejected=False).aggregate(Min('distance'))
             nearest_officer = Distance.objects.filter(bus=thing.bus, distance=min_distance["distance__min"]).first().officer
 
             if nearest_officer == request.user:
@@ -108,6 +108,16 @@ def update_location(request):
         return JsonResponse({'admin': True})
 
 
+def reject_alert(request):
+    #get updated information from meshblu
+    #TODO: replace this with getData() / python code to extract from serial
+    thing = Meshblu.objects.first()
+    
+    distance = Distance.objects.get(officer=request.user, bus=thing.bus)
+    distance.rejected = True
+    distance.save()
+
+    return redirect('/')
 
 
 @login_required

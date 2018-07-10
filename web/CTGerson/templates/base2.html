@@ -7,7 +7,7 @@
                 url: "/ajax/update_data/",
                 success: function (data) {
                     if (data.alert == true) {
-                        $('#alert').html('<h3>Nova ocorrência! <a href="/ocorrencia" class="waves-effect waves-light btn-large green accent-4"><i class="material-icons right">near_me</i><strong>ACEITAR</strong></a> <a href="/" class="waves-effect waves-light btn red"><i class="material-icons right">clear</i><strong>Rejeitar</strong></a><br />') 
+                        $('#alert').html('<h3>Nova ocorrência! <a href="/ocorrencia" class="waves-effect waves-light btn-large green accent-4"><i class="material-icons right">near_me</i><strong>ACEITAR</strong></a> <a href="reject_alert/" class="waves-effect waves-light btn red"><i class="material-icons right">clear</i><strong>Rejeitar</strong></a><br />') 
                     } else {
                         $('#alert').html('<h3>Nenhuma ocorrência no momento!</h3><br />')
                     }

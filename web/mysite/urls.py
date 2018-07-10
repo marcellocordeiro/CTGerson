@@ -31,4 +31,5 @@ urlpatterns = [
     path('salvar_ocorrencia/', views.update_occurrence, name='update_occurrence'),
     path('lista_ocorrencias/', views.occurrences_list, name='occurrences_list'),
     path('ocorrencia/', views.occurrence, name='occurrence'),
+    path('reject_alert/', views.reject_alert, name='reject_alert')
 ]
