@@ -2,12 +2,24 @@
 
 {% block javascript %}
     <script>
+        var previous_latitude = null;
+        var previous_longitude = null;
+
         setInterval(function () {
             $.ajax({
-                url: "/ajax/update_data/",
+                url: "/ajax/update_location/",
                 success: function (data) {
-                    $('#lat').hide().html(data.latitude).fadeIn('slow')
-                    $('#long').hide().html(data.longitude).fadeIn('slow')
+                    if (data.admin) {
+                        $('#detail').hide().html('<h2>Página disponível apenas para policiais</h2>').show()
+                    } else {
+                        if ((data.latitude != previous_latitude) || (data.longitude != previous_longitude)) {
+                            $('#lat').hide().html(data.latitude).fadeIn('slow')
+                            $('#long').hide().html(data.longitude).fadeIn('slow')
+                        }
+
+                        previous_latitude = data.latitude;
+                        previous_longitude = data.longitude;
+                    }
                 }
             });
         }, 1000);
@@ -24,7 +36,7 @@
 
 {% block content %}
     <div class="page-title">
-        <h2>Localização</h2>
+        <h2>Ocorrência</h2>
         <br />
     </div>
 

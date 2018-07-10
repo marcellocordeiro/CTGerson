@@ -17,7 +17,7 @@ def update_data(request):
     if request.user.groups.filter(name='Police Officers').exists():
         #get updated information from meshblu
         #TODO: replace this with getData() / python code to extract from serial
-        thing = Meshblu.objects.get(id=1)
+        thing = Meshblu.objects.first()
 
         if thing.button:
             try:
@@ -25,8 +25,7 @@ def update_data(request):
 
                 #get nearest officer
                 min_distance = Distance.objects.all().aggregate(Min('distance'))
-                nearest_officers = Distance.objects.filter(distance=min_distance["distance__min"])
-                nearest_officer = nearest_officers[0].officer
+                nearest_officer = Distance.objects.filter(distance=min_distance["distance__min"]).first().officer
 
                 if nearest_officer == request.user:
                     return JsonResponse({'alert': True})
@@ -40,7 +39,7 @@ def update_data(request):
 
                 #calculate distance and send to web database
                 distance = math.sqrt((thing.latitude - officer_latitude) ** 2 + (thing.longitude - officer_longitude) ** 2)
-                distance_obj = Distance(officer=request.user, bus=Bus.objects.get(plate='PGC-7504'), distance=distance)
+                distance_obj = Distance(officer=request.user, bus=thing.bus, distance=distance)
                 distance_obj.save()
 
                 return JsonResponse({'alert': False})
@@ -48,6 +47,19 @@ def update_data(request):
     return JsonResponse({'alert': False})
 
 
+def update_location(request):
+    if request.user.groups.filter(name='Police Officers').exists():
+        #get updated information from meshblu
+        #TODO: replace this with getData() / python code to extract from serial
+        thing = Meshblu.objects.first()
+
+        return JsonResponse({
+            'admin': False,
+            'latitude': thing.latitude,
+            'longitude': thing.longitude
+        })
+    else:
+        return JsonResponse({'admin': True})
 
 
 
@@ -120,5 +132,5 @@ def bus_detail(request, pk):
 @login_required
 def occurrences_list(request):
     admin = request.user.groups.filter(name='Administrators').exists()
-    occurrences = Occurrence.objects.all()
+    occurrences = Occurrence.objects.all().filter(closed=True)
     return render(request, 'occurrences_list.html', {'admin': admin, 'occurrences': occurrences})
