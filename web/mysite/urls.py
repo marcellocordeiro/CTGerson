@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('ajax/update_data/', views.update_data, name='update_data'),
+    path('ajax/update_location/', views.update_location, name='update_location'),
     path('', views.home, name='home'),
     path('lista_onibus/', views.bus_list, name='bus_list'),
     path('cadastrar_onibus/', views.register_bus, name = 'register_bus'),
@@ -28,6 +29,6 @@ urlpatterns = [
     path('remover_onibus/(?P<pk>[0-9]+)/', views.remove_bus, name = 'remove_bus'),
     path('onibus/(?P<pk>[0-9]+)/', views.bus_detail, name='bus_detail'),
     path('lista_ocorrencias/', views.occurrences_list, name='occurrences_list'),
-
+ 
     path('occurrence/', views.occurrence, name='occurrence'),
 ]
